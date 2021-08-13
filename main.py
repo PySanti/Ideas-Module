@@ -1,3 +1,6 @@
+# all the code made by Santiago De Andrade between 06/2021 and 08/2021
+
+
 def agregar_a_lista(    lista : list, 
                         elementos_y_cantidades : dict) -> list:
     """
