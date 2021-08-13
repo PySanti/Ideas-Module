@@ -611,4 +611,3 @@ def imprimir_tabla( diccionario : dict,
         print()
     imprimir_linea(columnas)
 
-print(prueba_de_seguridad('santiago', '16102005', 1, '0', tiempo_maximo=5, intentos=2));
