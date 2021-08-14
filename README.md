@@ -1,4 +1,4 @@
-# Personal-Python-Module
+# Ideas module
 
     Download:
         git clone https://github.com/PySanti/Personal-Python-Module
