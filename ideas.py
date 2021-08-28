@@ -530,7 +530,7 @@ def big_number_input(mensaje,
                 else:
                     enteros.append(entrada)
             except Exception:
-                break;
+                continue;
         if (not lista_vacia(enteros) and (not list_to_str(enteros) == '-')) and  (not rango_menor <= float(list_to_str( enteros + ['.'] + flotantes if flotantes != None and len(flotantes) > 0  else enteros)) <= rango_mayor):
             if flotantes != None and not lista_vacia(flotantes):
                 flotantes.pop()
