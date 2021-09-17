@@ -408,7 +408,7 @@ def list_to_str(lista : list) -> str:
         else:
             cadena = cadena[:] + str(i)
     return cadena if cadena != None else '' 
-def printBeutyNumber(msg, number):
+def printBeautyNumber(msg, number):
     # Imprime number separado por puntos
     print(msg, end="");
     numberList = [i for i in str(number)];
