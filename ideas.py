@@ -1,6 +1,8 @@
 # all the code made by Santiago De Andrade between 06/2021 and 08/2021
 
 
+
+
 def agregar_a_lista(    lista : list, 
                         elementos_y_cantidades : dict) -> list:
     """
@@ -406,9 +408,24 @@ def list_to_str(lista : list) -> str:
         else:
             cadena = cadena[:] + str(i)
     return cadena if cadena != None else '' 
+def printBeutyNumber(msg, number):
+    # Imprime number separado por puntos
+    print(msg, end="");
+    numberList = [i for i in str(number)];
+    dotInterval = len(numberList)%3;
+    if (dotInterval == 0):
+        dotInterval = 3;
+    for number in numberList:
+        if (dotInterval == 0):
+            print(".", end="");
+            dotInterval = 2;
+        else:
+            dotInterval-=1;
+        print(number, end="");
 def big_number_input(mensaje,
                     rango_menor = 0,
-                    rango_mayor = 1000000) -> int:
+                    rango_mayor = 1000000, 
+                    coloredLine  = False) -> int:
     """
     Funcion creada para una entrada de datos de numeros grandes con comodidad
     
@@ -418,6 +435,8 @@ def big_number_input(mensaje,
     Arg[2] : rango mayor de entrada, no se permitira introducir numeros mayores (opcional)
     
     Arg[3] : rango menor de entrada, no se permitiran introducir numeros menores (opcional) 
+
+    Arg[4] :  True para que la linea de entrada se coloree con un fondo blanco y fore negro
     
     Retorna el numero introducido despues del enter
     
@@ -430,6 +449,7 @@ def big_number_input(mensaje,
     try:
         from os import system as  command
         from  getch import getch
+        from colorama import Fore, Back
         mensaje = str(mensaje)
         rango_mayor = int(rango_mayor)
         rango_menor = int(rango_menor)
@@ -459,6 +479,8 @@ def big_number_input(mensaje,
         if lista_vacia(enteros):
             print()
         else: 
+            if (coloredLine):
+                print(f"{Fore.BLACK}{Back.WHITE}",end="")
             if enteros[0] == '-':
                 print('-', end='')
                 enteros = enteros[1:]
@@ -477,6 +499,8 @@ def big_number_input(mensaje,
                     print(i, end='')
             print(mensaje_de_advertencia if mensaje_de_advertencia != None else '')
             print()
+            if (coloredLine):
+                print(f"{Fore.RESET} {Back.RESET}")
 
     # funcion principal
     enteros = []
@@ -530,7 +554,7 @@ def big_number_input(mensaje,
                 else:
                     enteros.append(entrada)
             except Exception:
-                continue;
+                break;
         if (not lista_vacia(enteros) and (not list_to_str(enteros) == '-')) and  (not rango_menor <= float(list_to_str( enteros + ['.'] + flotantes if flotantes != None and len(flotantes) > 0  else enteros)) <= rango_mayor):
             if flotantes != None and not lista_vacia(flotantes):
                 flotantes.pop()
@@ -610,4 +634,3 @@ def imprimir_tabla( diccionario : dict,
                 print(carcater_de_division_vertical,end='')
         print()
     imprimir_linea(columnas)
-
