@@ -675,9 +675,6 @@ def generateAnimationDict(path, has_alpha_pixls, colorkey):
                 animations[animationType][animationDirection].append(image)
     return animations
 
-animations = generateAnimationDict("/home/santiago/Escritorio/Greelish/Pygame/prueba4/material/animations/", True,(1,2,"pepe"))
-
-
 
 class AnimationController:
     """
