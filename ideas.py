@@ -634,3 +634,81 @@ def imprimir_tabla( diccionario : dict,
                 print(carcater_de_division_vertical,end='')
         print()
     imprimir_linea(columnas)
+
+
+def generateAnimationDict(path, has_alpha_pixls, colorkey):
+    """
+        Recibe la ruta de una carpeta de animacion y retorna el diccionario correspondiente. La carpeta debe ser homologa al siguiente arbol ...
+            folder
+                    |
+                    |__
+                        Animation type |
+                                       |__  Direction 2
+                                       |
+                                       |__
+                                            Direction 1
+    """
+    import os
+    import pygame.image
+    pygame.display.set_mode((500,300))
+    animations = {}
+    for animationType in os.listdir(path):
+        animations[animationType] = {}
+        for animationDirection in os.listdir(path + "/" + animationType):
+            animations[animationType][animationDirection] = []
+            for animation in os.listdir(path + "/" + animationType + "/" + animationDirection):
+                image = pygame.image.load(path + "/" + animationType + "/" + animationDirection + "/" + animation)
+                if has_alpha_pixls:
+                    image.convert_alpha()
+                else:
+                    image.convert()
+                if (type(colorkey) == tuple or type(colorkey) == list) and (len(colorkey) == 3):
+                    try:
+                        for rgb in colorkey:
+                            if type(rgb) != int:
+                                raise IndexError;
+                    except IndexError:
+                        print("\n\t ~ Error en la llamada a la funcion generateAnimationDict() del modulo ideas.py. El colorkey es invalido ... ")
+                        quit()
+                    else:
+                        image.set_colorkey(colorkey)
+                animations[animationType][animationDirection].append(image)
+    return animations
+
+animations = generateAnimationDict("/home/santiago/Escritorio/Greelish/Pygame/prueba4/material/animations/", True,(1,2,"pepe"))
+
+
+
+class AnimationController:
+    """
+        Clase creada para objetos de administracion de animaciones. Lo unico destacable es que el parametro
+        animations debe ser el diccionario retornado por la funcion generateAnimationDict() de este mismo modulo. Ademas de 
+        que los nombres de las animaciones deben seguir la sintaxis : "animationType/animationDirection"
+    """
+    def __init__(self,  animations : dict, frames_per_img : int, initial_animation : str):
+        self.animations = animations
+        self.current_animation_index    = 0
+        self.current_animation_frame    = 0
+        self.frames_per_image           = frames_per_img
+        self.current_animation_name     = initial_animation
+
+        animationType, animationDirection = initial_animation.split("/")
+        self.current_animation_list     = self.animations[animationType][animationDirection]
+
+    def changeAnimation(self, new_animation):
+        self.current_animation_name = new_animation
+        self.current_animation_index = 0
+        self.current_animation_frame = 0
+        animation_type, animation_direction = new_animation.split("/")
+        self.current_animation_list = self.animations[animation_type][animation_direction]
+
+    def updateAnimation(self):
+        self.current_animation_frame += 1
+        if self.current_animation_frame == self.frames_per_image:
+            self.current_animation_frame = 0
+            self.current_animation_index += 1
+            if self.current_animation_index > (len(self.current_animation_list) - 1):
+                self.current_animation_index = 0
+
+
+
